@@ -1,0 +1,25 @@
+{
+    "name": "RestResourceAllDeals",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "GetDealsAPI",
+            "type": "LinkedServiceReference",
+            "parameters": {
+                "dealsBaseURL": {
+                    "value": "@dataset().dealsBaseURL",
+                    "type": "Expression"
+                }
+            }
+        },
+        "parameters": {
+            "dealsBaseURL": {
+                "type": "string",
+                "defaultValue": "https://api.pipedrive.com/v1/deals?"
+            }
+        },
+        "annotations": [],
+        "type": "RestResource",
+        "schema": []
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

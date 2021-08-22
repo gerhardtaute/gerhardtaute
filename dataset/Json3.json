@@ -1,0 +1,325 @@
+{
+    "name": "Json3",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureBlobStorageProdPipeDrive",
+            "type": "LinkedServiceReference",
+            "parameters": {
+                "Filename": "AllDeals_2021-08-18T01:55:36.6626918Z_501_1000.json"
+            }
+        },
+        "parameters": {
+            "Filename": {
+                "type": "string",
+                "defaultValue": "AllDeals_2021-08-18T071749_501_1000.json"
+            }
+        },
+        "annotations": [],
+        "type": "Json",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "fileName": {
+                    "value": "@dataset().Filename",
+                    "type": "Expression"
+                },
+                "folderPath": "ProductionFiles",
+                "container": "pipedrive"
+            }
+        },
+        "schema": {
+            "type": "object",
+            "properties": {
+                "DealId": {
+                    "type": "integer"
+                },
+                "CreatorUserId_Id": {
+                    "type": "integer"
+                },
+                "CreatorUserId_Name": {
+                    "type": "string"
+                },
+                "CreatorUserId_Email": {
+                    "type": "string"
+                },
+                "CreatorUserId_HasPic": {
+                    "type": "integer"
+                },
+                "CreatorUserId_PicHash": {
+                    "type": "string"
+                },
+                "CreatorUserId__ActiveFlag": {
+                    "type": "boolean"
+                },
+                "CreatorUserId__Value": {
+                    "type": "integer"
+                },
+                "UserId_Id": {
+                    "type": "integer"
+                },
+                "UserId_Name": {
+                    "type": "string"
+                },
+                "UserId_Email": {
+                    "type": "string"
+                },
+                "UserId_HasPic": {
+                    "type": "integer"
+                },
+                "UserId_PicHash": {
+                    "type": "string"
+                },
+                "UserId_Active_flag": {
+                    "type": "boolean"
+                },
+                "UserId_Value": {
+                    "type": "integer"
+                },
+                "Person_Id": {
+                    "type": "object",
+                    "properties": {
+                        "active_flag": {
+                            "type": "boolean"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "primary": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "phone": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "primary": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            }
+                        },
+                        "owner_id": {
+                            "type": "integer"
+                        },
+                        "value": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "OrgId_Name": {
+                    "type": "string"
+                },
+                "OrgId_PeopleCount": {
+                    "type": "integer"
+                },
+                "OrgId_Owner_id": {
+                    "type": "integer"
+                },
+                "OrgId_Address": {
+                    "type": "string"
+                },
+                "OrgId_ActiveFlag": {
+                    "type": "boolean"
+                },
+                "OrgId_ccEmail": {
+                    "type": "string"
+                },
+                "OrgId_Value": {
+                    "type": "integer"
+                },
+                "StageId": {
+                    "type": "integer"
+                },
+                "StageId_Title": {
+                    "type": "string"
+                },
+                "Data_Value": {
+                    "type": "integer"
+                },
+                "Data_Currency": {
+                    "type": "string"
+                },
+                "Data_AddTime": {
+                    "type": "string"
+                },
+                "Data_UpdateTime": {
+                    "type": "string"
+                },
+                "Data_StageChangeTime": {
+                    "type": "string"
+                },
+                "Data_Active": {
+                    "type": "boolean"
+                },
+                "Data_Deleted": {
+                    "type": "boolean"
+                },
+                "Data_Status": {
+                    "type": "string"
+                },
+                "Data_Probability": {
+                    "type": "integer"
+                },
+                "Data_NextActivityDate": {
+                    "type": "null"
+                },
+                "Data_NextActivityTime": {
+                    "type": "null"
+                },
+                "Data_NextActivityId": {
+                    "type": "null"
+                },
+                "Data_LastActivityId": {
+                    "type": "null"
+                },
+                "Data_LastActivityDate": {
+                    "type": "null"
+                },
+                "Data_LostReason": {
+                    "type": "string"
+                },
+                "Data_VisibleTo": {
+                    "type": "string"
+                },
+                "Data_CloseTime": {
+                    "type": "string"
+                },
+                "Data_PipelineId": {
+                    "type": "integer"
+                },
+                "Data_WonTime": {
+                    "type": "string"
+                },
+                "Data_FirstWonTime": {
+                    "type": "string"
+                },
+                "Data_LostTime": {
+                    "type": "string"
+                },
+                "Data_ProductsCount": {
+                    "type": "integer"
+                },
+                "Data_FilesCount": {
+                    "type": "integer"
+                },
+                "Data_NotesCount": {
+                    "type": "integer"
+                },
+                "Data_FollowersCount": {
+                    "type": "integer"
+                },
+                "Data_EmailMessagesCount": {
+                    "type": "integer"
+                },
+                "Data_ActivitiesCount": {
+                    "type": "integer"
+                },
+                "Data_DoneActivitiesCount": {
+                    "type": "integer"
+                },
+                "Data_UndoneActivitiesCount": {
+                    "type": "integer"
+                },
+                "Data_ParticipantsCount": {
+                    "type": "integer"
+                },
+                "Data_ExpectedCloseDate": {
+                    "type": "string"
+                },
+                "Data_LastIncomingMailTime": {
+                    "type": "string"
+                },
+                "Data_LastOutgoingMailTime": {
+                    "type": "string"
+                },
+                "Data_Label": {
+                    "type": "null"
+                },
+                "SuccessfullContractor": {
+                    "type": "null"
+                },
+                "c809b0f358b647949630a948bc61eaaffef05221": {
+                    "type": "string"
+                },
+                "c809b0f358b647949630a948bc61eaaffef05221_until": {
+                    "type": "string"
+                },
+                "Data_Renewal_type": {
+                    "type": "string"
+                },
+                "Data_StageOrderNr": {
+                    "type": "integer"
+                },
+                "Data_PersonName": {
+                    "type": "string"
+                },
+                "Data_OrgName": {
+                    "type": "string"
+                },
+                "Data_NextActivitySubject": {
+                    "type": "null"
+                },
+                "Data_NextActivityType": {
+                    "type": "null"
+                },
+                "Data_NextActivityDuration": {
+                    "type": "null"
+                },
+                "Data_NextActivityNote": {
+                    "type": "null"
+                },
+                "Data_GroupId": {
+                    "type": "null"
+                },
+                "Data_GroupName": {
+                    "type": "null"
+                },
+                "Data_FormattedValue": {
+                    "type": "string"
+                },
+                "Data_WeightedValue": {
+                    "type": "integer"
+                },
+                "Data_FormattedWeightedValue": {
+                    "type": "string"
+                },
+                "Data_WeightedValueCurrency": {
+                    "type": "string"
+                },
+                "Data_RottenTime": {
+                    "type": "null"
+                },
+                "Data_OwnerName": {
+                    "type": "string"
+                },
+                "Data_ccEmail": {
+                    "type": "string"
+                },
+                "Data_OrgHidden": {
+                    "type": "boolean"
+                },
+                "Data_PersonHidden": {
+                    "type": "boolean"
+                },
+                "pagination_more_items_in_collection": {
+                    "type": "boolean"
+                }
+            }
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

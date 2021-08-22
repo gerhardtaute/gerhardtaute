@@ -1,0 +1,6 @@
+selected resource name:		FinalPipelinePipeDrive
+selected resource type:		pipeline
+factory name:			adfPipeDrive
+factory location:		australiaeast
+subscription id:		c857ec5a-be50-4b4a-9daa-4a9fc80011f5
+time of download (UTC):		Sun, 22 Aug 2021 10:07:22 GMT

@@ -1,0 +1,22 @@
+{
+    "now": "2021-08-22T10:07:22.736Z",
+    "perfNow": 595593.6,
+    "diagnosticCorrelation": "472a1410-7703-476e-95fb-5e94e6711f09",
+    "source": "DownloadSupportFiles",
+    "environment": {
+        "productName": "adf",
+        "buildVersion": "1.0.20210817.11",
+        "environmentType": 3,
+        "resourceName": "adfPipeDrive",
+        "resourceRegion": "australiaeast",
+        "resourceGroup": "rgPipeDriveAPI",
+        "subscriptionId": "c857ec5a-be50-4b4a-9daa-4a9fc80011f5",
+        "sessionId": "By0wr",
+        "operationId": "bjVlm",
+        "gitType": "live"
+    },
+    "additionalInfo": {
+        "selectedResource": "FinalPipelinePipeDrive",
+        "selectedResourceType": "pipeline"
+    }
+}

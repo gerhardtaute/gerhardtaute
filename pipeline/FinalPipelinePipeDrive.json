@@ -1,0 +1,931 @@
+{
+    "name": "FinalPipelinePipeDrive",
+    "properties": {
+        "activities": [
+            {
+                "name": "RangeLookup",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "AzureSqlSource",
+                        "sqlReaderQuery": "SELECT RangeStart, RangeEnd\nFROM RecordRange\nWHERE Id <= 5",
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "dataset": {
+                        "referenceName": "AzureSqlTable_RecordRange",
+                        "type": "DatasetReference"
+                    },
+                    "firstRowOnly": false
+                }
+            },
+            {
+                "name": "ForEachRange",
+                "type": "ForEach",
+                "dependsOn": [
+                    {
+                        "activity": "RangeLookup",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "items": {
+                        "value": "@activity('RangeLookup').output.value",
+                        "type": "Expression"
+                    },
+                    "isSequential": true,
+                    "activities": [
+                        {
+                            "name": "Copy data1",
+                            "type": "Copy",
+                            "dependsOn": [],
+                            "policy": {
+                                "timeout": "7.00:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "source": {
+                                    "type": "RestSource",
+                                    "httpRequestTimeout": "00:01:40",
+                                    "requestInterval": "00.00:00:00.010",
+                                    "requestMethod": "GET"
+                                },
+                                "sink": {
+                                    "type": "JsonSink",
+                                    "storeSettings": {
+                                        "type": "AzureBlobStorageWriteSettings"
+                                    },
+                                    "formatSettings": {
+                                        "type": "JsonWriteSettings",
+                                        "filePattern": "arrayOfObjects"
+                                    }
+                                },
+                                "enableStaging": false,
+                                "translator": {
+                                    "type": "TabularTranslator",
+                                    "mappings": [
+                                        {
+                                            "source": {
+                                                "path": "['id']"
+                                            },
+                                            "sink": {
+                                                "path": "DealId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['id']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId_Id"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['name']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId_Name"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['email']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId_Email"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['has_pic']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId_HasPic"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['pic_hash']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId_PicHash"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['active_flag']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId__ActiveFlag"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['creator_user_id']['value']"
+                                            },
+                                            "sink": {
+                                                "path": "CreatorUserId__Value"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['id']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_Id"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['name']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_Name"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['email']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_Email"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['has_pic']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_HasPic"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['pic_hash']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_PicHash"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['active_flag']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_Active_flag"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['user_id']['value']"
+                                            },
+                                            "sink": {
+                                                "path": "UserId_Value"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['person_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Person_Id"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['name']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_Name"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['people_count']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_PeopleCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['owner_id']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_Owner_id"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['address']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_Address"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['active_flag']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_ActiveFlag"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['cc_email']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_ccEmail"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_id']['value']"
+                                            },
+                                            "sink": {
+                                                "path": "OrgId_Value"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['stage_id']"
+                                            },
+                                            "sink": {
+                                                "path": "StageId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['title']"
+                                            },
+                                            "sink": {
+                                                "path": "StageId_Title"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['value']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Value"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['currency']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Currency"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['add_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_AddTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['update_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_UpdateTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['stage_change_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_StageChangeTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['active']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Active"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['deleted']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Deleted"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['status']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Status"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['probability']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Probability"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_date']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityDate"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['last_activity_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LastActivityId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['last_activity_date']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LastActivityDate"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['lost_reason']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LostReason"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['visible_to']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_VisibleTo"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['close_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_CloseTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['pipeline_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_PipelineId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['won_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_WonTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['first_won_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_FirstWonTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['lost_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LostTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['products_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_ProductsCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['files_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_FilesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['notes_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NotesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['followers_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_FollowersCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['email_messages_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_EmailMessagesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['activities_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_ActivitiesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['done_activities_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_DoneActivitiesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['undone_activities_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_UndoneActivitiesCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['participants_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_ParticipantsCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['expected_close_date']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_ExpectedCloseDate"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['last_incoming_mail_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LastIncomingMailTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['last_outgoing_mail_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_LastOutgoingMailTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['label']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Label"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['name']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_name"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['people_count']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_PeopleCount"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['owner_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_vvvvSuccessfullContractor_OwnerId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['address']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_Address"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['active_flag']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_ActiveFlag"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['cc_email']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_ccEmail"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['b67be18bea69dbebbc75942ea3f87900a839a956']['value']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_SuccessfullContractor_Value"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['c809b0f358b647949630a948bc61eaaffef05221']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_ProjectDurationDates"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['c809b0f358b647949630a948bc61eaaffef05221_until']"
+                                            },
+                                            "sink": {
+                                                "path": "Cust_ProjectDurationDates_Until"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['renewal_type']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_Renewal_type"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['stage_order_nr']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_StageOrderNr"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['person_name']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_PersonName"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_name']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_OrgName"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_subject']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivitySubject"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_type']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityType"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_duration']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityDuration"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['next_activity_note']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_NextActivityNote"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['group_id']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_GroupId"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['group_name']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_GroupName"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['formatted_value']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_FormattedValue"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['weighted_value']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_WeightedValue"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['formatted_weighted_value']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_FormattedWeightedValue"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['weighted_value_currency']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_WeightedValueCurrency"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['rotten_time']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_RottenTime"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['owner_name']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_OwnerName"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['cc_email']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_ccEmail"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['org_hidden']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_OrgHidden"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "['person_hidden']"
+                                            },
+                                            "sink": {
+                                                "path": "Data_PersonHidden"
+                                            }
+                                        },
+                                        {
+                                            "source": {
+                                                "path": "$['additional_data']['pagination']['more_items_in_collection']"
+                                            },
+                                            "sink": {
+                                                "path": "pagination_more_items_in_collection"
+                                            }
+                                        }
+                                    ],
+                                    "collectionReference": "$['data']"
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "referenceName": "RestResourceAllDeals",
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "dealsBaseURL": {
+                                            "value": "@Concat(pipeline().parameters.dealsBaseURL,pipeline().parameters.api_Token,'&start=',String(item().RangeStart),'&limit=',String(item().RangeEnd))",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                }
+                            ],
+                            "outputs": [
+                                {
+                                    "referenceName": "Json3",
+                                    "type": "DatasetReference",
+                                    "parameters": {
+                                        "Filename": {
+                                            "value": "@replace(Concat('AllDeals','_',formatDateTime(utcnow(),'yyyy-MM-ddTHHmmss'),'_',string(item().RangeStart),'_',string(item().RangeEnd),'.json'),':','')\n\n",
+                                            "type": "Expression"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "name": "If Condition - more records",
+                            "type": "IfCondition",
+                            "dependsOn": [
+                                {
+                                    "activity": "Set variable - more records",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "userProperties": [],
+                            "typeProperties": {
+                                "expression": {
+                                    "value": "@equals(pipeline().parameters.pagination_more_items_in_collection,false)",
+                                    "type": "Expression"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Web - Break Loop",
+                            "type": "WebActivity",
+                            "dependsOn": [
+                                {
+                                    "activity": "If Condition - more records",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "policy": {
+                                "timeout": "7.00:00:00",
+                                "retry": 0,
+                                "retryIntervalInSeconds": 30,
+                                "secureOutput": false,
+                                "secureInput": false
+                            },
+                            "userProperties": [],
+                            "typeProperties": {
+                                "url": {
+                                    "value": "@activity('Copy data1').output",
+                                    "type": "Expression"
+                                },
+                                "method": "POST",
+                                "body": "{“message”:”Cancelling the pipeline”}.",
+                                "authentication": {
+                                    "type": "MSI",
+                                    "resource": "https://management.azure.com"
+                                }
+                            }
+                        },
+                        {
+                            "name": "Set variable - more records",
+                            "type": "SetVariable",
+                            "dependsOn": [
+                                {
+                                    "activity": "Copy data1",
+                                    "dependencyConditions": [
+                                        "Succeeded"
+                                    ]
+                                }
+                            ],
+                            "userProperties": [],
+                            "typeProperties": {
+                                "variableName": "pagination_more_items_in_collection",
+                                "value": {
+                                    "value": "@activity('Copy data1').sink.pagination_more_items_in_collection",
+                                    "type": "Expression"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "parameters": {
+            "api_Token": {
+                "type": "string",
+                "defaultValue": "api_token=6502855c8a87abfaa103e64bd358a926901d6f19"
+            },
+            "dealsBaseURL": {
+                "type": "string",
+                "defaultValue": "https://api.pipedrive.com/v1/deals?"
+            },
+            "pagination_more_items_in_collection": {
+                "type": "string",
+                "defaultValue": "True"
+            }
+        },
+        "variables": {
+            "RangeStart": {
+                "type": "String",
+                "defaultValue": "0"
+            },
+            "RangeEnd": {
+                "type": "String",
+                "defaultValue": "500"
+            },
+            "pagination_more_items_in_collection": {
+                "type": "String",
+                "defaultValue": "true"
+            }
+        },
+        "annotations": [],
+        "lastPublishTime": "2021-08-18T07:29:16Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

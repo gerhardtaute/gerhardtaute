@@ -1,0 +1,33 @@
+{
+    "name": "AzureSqlTable_RecordRange",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "AzureSqlDatabase1",
+            "type": "LinkedServiceReference"
+        },
+        "annotations": [],
+        "type": "AzureSqlTable",
+        "schema": [
+            {
+                "name": "Id",
+                "type": "int",
+                "precision": 10
+            },
+            {
+                "name": "RangeStart",
+                "type": "int",
+                "precision": 10
+            },
+            {
+                "name": "RangeEnd",
+                "type": "int",
+                "precision": 10
+            }
+        ],
+        "typeProperties": {
+            "schema": "dbo",
+            "table": "RecordRange"
+        }
+    },
+    "type": "Microsoft.DataFactory/factories/datasets"
+}

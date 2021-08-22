@@ -1,0 +1,19 @@
+{
+    "name": "GetDealsAPI",
+    "type": "Microsoft.DataFactory/factories/linkedservices",
+    "properties": {
+        "parameters": {
+            "dealsBaseURL": {
+                "type": "string",
+                "defaultValue": "https://api.pipedrive.com/v1/deals?"
+            }
+        },
+        "annotations": [],
+        "type": "RestService",
+        "typeProperties": {
+            "url": "@{linkedService().dealsBaseURL}",
+            "enableServerCertificateValidation": false,
+            "authenticationType": "Anonymous"
+        }
+    }
+}
